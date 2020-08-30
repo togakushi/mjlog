@@ -132,9 +132,9 @@ def display(args):
     if args.debug: print('DEBUG:', agari_dist)
 
     if args.player:
-        print('解析対象者>', ', '.join([x for x in args.player]))
-        print('解析ログ数> 試合数: {} / 局数: {}'.format(game['参加試合数'], game['参加局数']))
-        print('対戦卓    > 一般卓: {} / 上級卓: {} / 特上卓: {} / 鳳凰卓: {}'.format(
+        print('解析対象>', ', '.join([x for x in args.player]))
+        print('解析ログ> 試合数: {} / 局数: {}'.format(game['参加試合数'], game['参加局数']))
+        print('対戦卓  > 一般卓: {} / 上級卓: {} / 特上卓: {} / 鳳凰卓: {}'.format(
             game['卓'].count(0),
             game['卓'].count(1),
             game['卓'].count(2),
@@ -181,17 +181,15 @@ def display(args):
                 agari_ron, agari_ron / (agari_tumo + agari_ron),
             ))
 
-            if sum(agari_dist['和了時'].values()):
-                print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
-                    agari_dist['和了時']['副露'],
-                    agari_dist['和了時']['副露'] / sum(agari_dist['和了時'].values()),
-                    agari_dist['和了時']['立直'],
-                    agari_dist['和了時']['立直'] / sum(agari_dist['和了時'].values()),
-                    agari_dist['和了時']['ダマ'],
-                    agari_dist['和了時']['ダマ'] / sum(agari_dist['和了時'].values()),
-                ))
-            else:
-                print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
+            v = sum(agari_dist['和了時'].values())
+            print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
+                agari_dist['和了時']['副露'],
+                agari_dist['和了時']['副露'] / v if v else 0,
+                agari_dist['和了時']['立直'],
+                agari_dist['和了時']['立直'] / v if v else 0,
+                agari_dist['和了時']['ダマ'],
+                agari_dist['和了時']['ダマ'] / v if v else 0,
+            ))
             print('  平均和了: {}点 / 最大和了: {}点'.format(
                 int(sum(counter['和了点']) / len(counter['和了点'])),
                 max(counter['和了点']),

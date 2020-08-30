@@ -176,13 +176,13 @@ def display(args):
                 (agari_tumo + agari_ron) / game['参加局数'], agari_tumo + agari_ron,
                 sum(counter['和了巡目']) / len(counter['和了巡目']),
             ))
-            print('　自摸和: {}回 ({:.3%}) / 栄和: {}回 ({:.3%})'.format(
+            print('  自摸和: {}回 ({:.3%}) / 栄和: {}回 ({:.3%})'.format(
                 agari_tumo, agari_tumo / (agari_tumo + agari_ron),
                 agari_ron, agari_ron / (agari_tumo + agari_ron),
             ))
 
             if sum(agari_dist['和了時'].values()):
-                print('　和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
+                print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
                     agari_dist['和了時']['副露'],
                     agari_dist['和了時']['副露'] / sum(agari_dist['和了時'].values()),
                     agari_dist['和了時']['立直'],
@@ -191,8 +191,8 @@ def display(args):
                     agari_dist['和了時']['ダマ'] / sum(agari_dist['和了時'].values()),
                 ))
             else:
-                print('　和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
-            print('　平均和了: {}点 / 最大和了: {}点'.format(
+                print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
+            print('  平均和了: {}点 / 最大和了: {}点'.format(
                 int(sum(counter['和了点']) / len(counter['和了点'])),
                 max(counter['和了点']),
             ))
@@ -206,7 +206,7 @@ def display(args):
                 print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.4}'.format(0, 0, float(0)))
 
             if sum(agari_dist['放銃時'].values()):
-                print('　放銃時  > 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(
+                print('  放銃時  > 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(
                     agari_dist['放銃時']['副露'],
                     agari_dist['放銃時']['副露'] / sum(agari_dist['放銃時'].values()),
                     agari_dist['放銃時']['立直'],
@@ -215,10 +215,10 @@ def display(args):
                     agari_dist['放銃時']['面前'] / sum(agari_dist['放銃時'].values()),
                 ))
             else:
-                print('　放銃時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
+                print('  放銃時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
 
             if sum(agari_dist['放銃相手'].values()):
-                print('　放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
+                print('  放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
                     agari_dist['放銃相手']['副露'],
                     agari_dist['放銃相手']['副露'] / sum(agari_dist['放銃相手'].values()),
                     agari_dist['放銃相手']['立直'],
@@ -227,15 +227,15 @@ def display(args):
                     agari_dist['放銃相手']['ダマ'] / sum(agari_dist['放銃相手'].values()),
                 ))
             else:
-                print('　放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
+                print(  放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
 
             if len(counter['放銃点']):
-                print('　平均放銃: {}点 / 最大放銃: {}点'.format(
+                print('  平均放銃: {}点 / 最大放銃: {}点'.format(
                     int(sum(counter['放銃点']) / len(counter['放銃点'])),
                     max(counter['放銃点']),
                 ))
             else:
-                print('　平均放銃: {}点 / 最大放銃: {}点'.format(0, 0))
+                print('  平均放銃: {}点 / 最大放銃: {}点'.format(0, 0))
 
             print('被自摸率: {:.3%} ({}回)'.format(
                 common.TargetCount(args, result['被自摸']) / game['参加局数'],
@@ -299,7 +299,7 @@ def display(args):
         print('【副露データ】')
         if game['参加局数']:
             print('副露率: {:.3%} ({}回)'.format(counter['副露'] / game['参加局数'], counter['副露']))
-            print('　副露後> 和了: {}回 ({:.3%}) / 放銃: {}回 ({:.3%}) / 流局: {}回 ({:.3%})'.format( 
+            print('  副露後> 和了: {}回 ({:.3%}) / 放銃: {}回 ({:.3%}) / 流局: {}回 ({:.3%})'.format( 
                 counter['副露和了'],
                 counter['副露和了'] / counter['副露'] if counter['副露'] else 0,
                 counter['副露放銃'],
@@ -312,8 +312,8 @@ def display(args):
                 int(sum(counter['副露収入']) / counter['副露和了'] if counter['副露和了'] else 0),
                 int(abs(sum(counter['副露支出']) / counter['副露放銃']) if counter['副露放銃'] else 0),
             ))
-            print('　裸: {}回 ({:.3%})'.format(counter['裸'], counter['裸']/counter['副露']))
-            print('　槓> 暗槓: {}回 / 加槓 {}回 / 大明槓: {}回'.format(
+            print('  裸: {}回 ({:.3%})'.format(counter['裸'], counter['裸']/counter['副露']))
+            print('  槓> 暗槓: {}回 / 加槓 {}回 / 大明槓: {}回'.format(
                 counter['暗槓'], counter['加槓'], counter['大明槓'],
             ))
         else:
@@ -327,7 +327,7 @@ def display(args):
             for x in ('聴牌', '不聴', '途中流局', '流し満貫'):
                 ryukyoku_count += common.TargetCount(args, result[x])
             print('流局率: {:.3%} ({}回)'.format(ryukyoku_count / game['参加局数'], ryukyoku_count))
-            print('　聴牌: {}回 ({:.3%}) / 不聴: {}回 ({:.3%})'.format(
+            print('  聴牌: {}回 ({:.3%}) / 不聴: {}回 ({:.3%})'.format(
                 common.TargetCount(args, result['聴牌']),
                 common.TargetCount(args, result['聴牌']) / ryukyoku_count if ryukyoku_count else 0,
                 common.TargetCount(args, result['不聴']),
@@ -335,7 +335,7 @@ def display(args):
             ))
             for x in ('途中流局', '流し満貫'):
                 if common.TargetCount(args, result[x]):
-                    print('　{}: {}回 ({:.3%})'.format(
+                    print('  {}: {}回 ({:.3%})'.format(
                         x,
                         common.TargetCount(args, result[x]),
                         common.TargetCount(args, result[x]) / ryukyoku_count,
@@ -445,10 +445,6 @@ def fooro(args, header_flag):
             int(sum(counter['副露収支']) / counter['副露']),
             int(sum(counter['副露収入']) / counter['副露和了']),
             int(abs(sum(counter['副露支出']) / counter['副露放銃'])))
-        #print('　裸: {}回 ({:.3%})'.format(counter['裸'], counter['裸']/counter['副露']))
-        #print('　槓> 暗槓: {}回 / 加槓 {}回 / 大明槓: {}回'.format(
-        #    counter['暗槓'], counter['加槓'], counter['大明槓'],
-        #))
         msg.append(tmp)
 
     return(msg)

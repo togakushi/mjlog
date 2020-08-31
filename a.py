@@ -26,6 +26,10 @@ if __name__ == '__main__':
         if t:
             gamedata = common.GetGameData(t)
             gamedata['対局者'] = common.GetPlayerName(t)
+
+            if not str(gamedata['卓']) in args.taku.split(','):
+                continue
+
             if gamedata['sanma']:
                 # 三麻解析ループ
                 main.loop3(args, gamedata, t)

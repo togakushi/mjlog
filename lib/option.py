@@ -38,9 +38,10 @@ def parser():
     p.add_argument('-s', '--sute', action='store_true', help='捨牌情報を表示する')
     p.add_argument('-r', '--result', action='store_true', help='局収支情報を表示する')
     p.add_argument('-o', '--owari', action='store_true', help='最終情報を表示する')
-    p.add_argument('-v', '--verbos', action='store_true', help='ちょっとした情報を表示する')
+    p.add_argument('-t', '--taku', default='0,1,2,3', help='解析対象の卓をカンマ区切りで指定する(0:一般 1:上級 2:特上 3:鳳凰)')
     p.add_argument('-x', '--vicissitudes', choices=['houju', 'h', 'reach', 'r', 'fooro', 'f', 'basic', 'b'], help='成績遷移')
     p.add_argument('-c', '--count', type=int, default=15, help='成績遷移を指定数だけに絞る')
+    p.add_argument('-v', '--verbos', action='store_true', help='ちょっとした情報を表示する')
     p.add_argument('-q', '--quiet', action='store_false', help='統計情報を表示しない')
     p.add_argument('-d', '--debug', action='store_true', help='デバッグ情報を表示する')
 

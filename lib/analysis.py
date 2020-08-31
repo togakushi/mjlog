@@ -345,22 +345,22 @@ def display(args):
 def houju(args, header_flag):
     msg = []
     if header_flag:
-        tmp  = '試合数 /   放銃率 回数 / 放銃巡目 '
-        tmp += '/ 放銃時> 副露          立直          面前 '
-        tmp += '/ 放銃相手> 副露        立直          ダマ '
-        tmp += '/ 平均放銃点'
+        tmp  = '試合数 |   放銃率 回数 | 放銃巡目 '
+        tmp += '| 放銃時> 副露          立直          面前 '
+        tmp += '| 放銃相手> 副露        立直          ダマ '
+        tmp += '| 平均放銃点'
         msg.append(tmp)
     if game['参加局数']:
-        tmp  = '{:6} / {:>8.3%}  {:>3} /    {:>5.02f} / '.format(
+        tmp  = '{:6} | {:>8.3%}  {:>3} |    {:>5.02f} | '.format(
             game['参加試合数'],
             common.TargetCount(args, result['放銃']) / game['参加局数'],
             common.TargetCount(args, result['放銃']),
             sum(counter['放銃巡目']) / len(counter['放銃巡目']))
-        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} / '.format(
+        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} | '.format(
             agari_dist['放銃時']['副露'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['副露'],
             agari_dist['放銃時']['立直'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['立直'],
             agari_dist['放銃時']['面前'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['面前'])
-        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} / '.format(
+        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} | '.format(
             agari_dist['放銃相手']['副露'] / sum(agari_dist['放銃相手'].values()), agari_dist['放銃相手']['副露'],
             agari_dist['放銃相手']['立直'] / sum(agari_dist['放銃相手'].values()), agari_dist['放銃相手']['立直'],
             agari_dist['放銃相手']['ダマ'] / sum(agari_dist['放銃相手'].values()), agari_dist['放銃相手']['ダマ'])
@@ -373,17 +373,17 @@ def houju(args, header_flag):
 def reach(args, header_flag):
     msg = []
     if header_flag:
-        tmp  = '試合数 /   立直率 回数 / 立直巡目  先制率  回数 / '
-        tmp += '立直後>  和了         放銃         流局 / '
+        tmp  = '試合数 |   立直率 回数 | 立直巡目  先制率  回数 | '
+        tmp += '立直後>  和了         放銃         流局 | '
         tmp += '立直収支 立直収入 立直支出'
         msg.append(tmp)
     if game['参加局数']:
-        tmp  = '{:6} / {:>8.3%}  {:>3} /   {:>5.02f} {:>8.3%}   {:>3} / '.format(
+        tmp  = '{:6} | {:>8.3%}  {:>3} |   {:>5.02f} {:>8.3%}   {:>3} | '.format(
             game['参加試合数'],
             counter['立直'] / game['参加局数'], counter['立直'],
             sum(counter['立直巡目']) / len(counter['立直巡目']),
             counter['先制立直'] / counter['立直'], counter['先制立直'])
-        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3} {:>8.3%} {:>3} /'.format( 
+        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3} {:>8.3%} {:>3} | '.format( 
             counter['立直和了'] / counter['立直'], counter['立直和了'],
             counter['立直放銃'] / counter['立直'], counter['立直放銃'],
             counter['立直流局'] / counter['立直'], counter['立直流局'])
@@ -399,14 +399,14 @@ def reach(args, header_flag):
 def fooro(args, header_flag):
     msg = []
     if header_flag:
-        tmp  = '試合数 /   副露率 回数 / 副露後> 和了         放銃         流局 / '
+        tmp  = '試合数 |  副露率 回数 | 副露後> 和了         放銃         流局 | '
         tmp += '副露収支 副露収入 副露支出'
         msg.append(tmp)
     if game['参加局数']:
-        tmp  = '{:6} / {:>8.3%}  {:>3} /'.format(
+        tmp  = '{:6} | {:>8.3%} {:>3} | '.format(
             game['参加試合数'],
             counter['副露'] / game['参加局数'], counter['副露'])
-        tmp += '{:>8.3%} {:>3} {:>8.3%} {:>3} {:>8.3%} {:>3} /'.format( 
+        tmp += '{:>8.3%} {:>3} {:>8.3%} {:>3} {:>8.3%} {:>3} | '.format( 
             counter['副露和了'] / counter['副露'], counter['副露和了'],
             counter['副露放銃'] / counter['副露'], counter['副露放銃'],
             counter['副露流局'] / counter['副露'], counter['副露流局'])
@@ -422,9 +422,9 @@ def fooro(args, header_flag):
 def basic(args, header_flag):
     msg = []
     if header_flag:
-        tmp  = '試合数 局数 / 和了率   放銃率   立直率   副露率   / '
-        tmp += '平均(和了/放銃/立直収支/副露収支) / '
-        tmp += '順位        平均  連対率   飛び率   / '
+        tmp  = '試合数 局数 | 和了率   放銃率   立直率   副露率   | '
+        tmp += '平均(和了/放銃/立直収支/副露収支) | '
+        tmp += '順位        平均  連対率   飛び率   | '
         tmp += 'ポイント(累積/平均)'
         msg.append(tmp)
     if game['参加局数']:
@@ -436,18 +436,18 @@ def basic(args, header_flag):
         agari_tumo = common.TargetCount(args, result['自摸和'])
         agari_ron = common.TargetCount(args, result['栄和'])
 
-        tmp  = '{:6} {:4} / {:>8.3%} {:>8.3%} {:>8.3%} {:>8.3%} / '.format(
+        tmp  = '{:6} {:4} | {:>8.3%} {:>8.3%} {:>8.3%} {:>8.3%} | '.format(
             game['参加試合数'], game['参加局数'],
             (agari_tumo + agari_ron) / game['参加局数'],
             common.TargetCount(args, result['放銃']) / game['参加局数'],
             counter['立直'] / game['参加局数'],
             counter['副露'] / game['参加局数'])
-        tmp += '  {:>7} {:>7} {:>7} {:>7} / '.format(
+        tmp += '  {:>7} {:>7} {:>7} {:>7} | '.format(
             int(sum(counter['和了点']) / len(counter['和了点']) if len(counter['和了点']) else 0),
             int(sum(counter['放銃点']) / len(counter['放銃点']) if len(counter['放銃点']) else 0),
             int(sum(counter['立直収支']) / counter['立直'] if counter['立直'] else 0),
             int(sum(counter['副露収支']) / counter['副露'] if counter['副露'] else 0))
-        tmp += '{:>02}-{:>02}-{:>02}-{:>02} {:>.03f} {:>8.3%} {:>8.3%} / '.format(
+        tmp += '{:>02}-{:>02}-{:>02}-{:>02} {:>.03f} {:>8.3%} {:>8.3%} | '.format(
             total_r.count(1), total_r.count(2), total_r.count(3), total_r.count(4),
             sum(total_r) / len(total_r),
             (total_r.count(1) + total_r.count(2)) / len(total_r),

@@ -180,15 +180,11 @@ def display(args):
                 agari_tumo, agari_tumo / (agari_tumo + agari_ron),
                 agari_ron, agari_ron / (agari_tumo + agari_ron),
             ))
-
             v = sum(agari_dist['和了時'].values())
             print('  和了時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
-                agari_dist['和了時']['副露'],
-                agari_dist['和了時']['副露'] / v if v else 0,
-                agari_dist['和了時']['立直'],
-                agari_dist['和了時']['立直'] / v if v else 0,
-                agari_dist['和了時']['ダマ'],
-                agari_dist['和了時']['ダマ'] / v if v else 0,
+                agari_dist['和了時']['副露'], agari_dist['和了時']['副露'] / v if v else 0,
+                agari_dist['和了時']['立直'], agari_dist['和了時']['立直'] / v if v else 0,
+                agari_dist['和了時']['ダマ'], agari_dist['和了時']['ダマ'] / v if v else 0,
             ))
             print('  平均和了: {}点 / 最大和了: {}点'.format(
                 int(sum(counter['和了点']) / len(counter['和了点'])),
@@ -202,31 +198,18 @@ def display(args):
                 ))
             else:
                 print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.4}'.format(0, 0, float(0)))
-
-            if sum(agari_dist['放銃時'].values()):
-                print('  放銃時  > 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(
-                    agari_dist['放銃時']['副露'],
-                    agari_dist['放銃時']['副露'] / sum(agari_dist['放銃時'].values()),
-                    agari_dist['放銃時']['立直'],
-                    agari_dist['放銃時']['立直'] / sum(agari_dist['放銃時'].values()),
-                    agari_dist['放銃時']['面前'],
-                    agari_dist['放銃時']['面前'] / sum(agari_dist['放銃時'].values()),
-                ))
-            else:
-                print('  放銃時> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
-
-            if sum(agari_dist['放銃相手'].values()):
-                print('  放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
-                    agari_dist['放銃相手']['副露'],
-                    agari_dist['放銃相手']['副露'] / sum(agari_dist['放銃相手'].values()),
-                    agari_dist['放銃相手']['立直'],
-                    agari_dist['放銃相手']['立直'] / sum(agari_dist['放銃相手'].values()),
-                    agari_dist['放銃相手']['ダマ'],
-                    agari_dist['放銃相手']['ダマ'] / sum(agari_dist['放銃相手'].values()),
-                ))
-            else:
-                print('  放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(0, 0, 0, 0, 0, 0))
-
+            v = sum(agari_dist['放銃時'].values())
+            print('  放銃時  > 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(
+                agari_dist['放銃時']['副露'], agari_dist['放銃時']['副露'] / v if v else 0,
+                agari_dist['放銃時']['立直'], agari_dist['放銃時']['立直'] / v if v else 0,
+                agari_dist['放銃時']['面前'], agari_dist['放銃時']['面前'] / v if v else 0,
+            ))
+            v = sum(agari_dist['放銃相手'].values())
+            print('  放銃相手> 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / ダマ: {}回 ({:.3%})'.format(
+                agari_dist['放銃相手']['副露'], agari_dist['放銃相手']['副露'] / v if v else 0,
+                agari_dist['放銃相手']['立直'], agari_dist['放銃相手']['立直'] / v if v else 0,
+                agari_dist['放銃相手']['ダマ'], agari_dist['放銃相手']['ダマ'] / v if v else 0,
+            ))
             if len(counter['放銃点']):
                 print('  平均放銃: {}点 / 最大放銃: {}点'.format(
                     int(sum(counter['放銃点']) / len(counter['放銃点'])),
@@ -270,19 +253,15 @@ def display(args):
                 counter['立直'] / game['参加局数'], counter['立直'],
                 sum(counter['立直巡目']) / len(counter['立直巡目']),
             ))
+            v = counter['立直']
             print('  先制: {}回 ({:.3%}) / 追っかけ: {}回 ({:.3%})'.format(
-                counter['先制立直'],
-                counter['先制立直'] / counter['立直'] if counter['立直'] else 0,
-                counter['追掛立直'],
-                counter['追掛立直'] / counter['立直'] if counter['立直'] else 0,
+                counter['先制立直'], counter['先制立直'] / v if v else 0,
+                counter['追掛立直'], counter['追掛立直'] / v if v else 0,
             ))
             print('  立直後> 和了: {}回 ({:.3%}) / 放銃: {}回 ({:.3%}) / 流局: {}回 ({:.3%})'.format( 
-                counter['立直和了'],
-                counter['立直和了'] / counter['立直'] if counter['立直'] else 0,
-                counter['立直放銃'],
-                counter['立直放銃'] / counter['立直'] if counter['立直'] else 0,
-                counter['立直流局'],
-                counter['立直流局'] / counter['立直'] if counter['立直'] else 0,
+                counter['立直和了'], counter['立直和了'] / v if v else 0,
+                counter['立直放銃'], counter['立直放銃'] / v if v else 0,
+                counter['立直流局'], counter['立直流局'] / v if v else 0,
             ))
             print('  立直収支: {}点 / 立直収入: {}点 / 立直支出: {}点'.format(
                 int(sum(counter['立直収支']) / counter['立直'] if counter['立直'] else 0),
@@ -297,13 +276,11 @@ def display(args):
         print('【副露データ】')
         if game['参加局数']:
             print('副露率: {:.3%} ({}回)'.format(counter['副露'] / game['参加局数'], counter['副露']))
+            v = counter['副露']
             print('  副露後> 和了: {}回 ({:.3%}) / 放銃: {}回 ({:.3%}) / 流局: {}回 ({:.3%})'.format( 
-                counter['副露和了'],
-                counter['副露和了'] / counter['副露'] if counter['副露'] else 0,
-                counter['副露放銃'],
-                counter['副露放銃'] / counter['副露'] if counter['副露'] else 0,
-                counter['副露流局'],
-                counter['副露流局'] / counter['副露'] if counter['副露'] else 0,
+                counter['副露和了'], counter['副露和了'] / v if v else 0,
+                counter['副露放銃'], counter['副露放銃'] / v if v else 0,
+                counter['副露流局'], counter['副露流局'] / v if v else 0,
             ))
             print('  副露収支: {}点 / 副露収入: {}点 / 副露支出: {}点'.format(
                 int(sum(counter['副露収支']) / counter['副露'] if counter['副露'] else 0),
@@ -351,12 +328,6 @@ def display(args):
                     table.shanten[i], counter['向聴数'].count(i),
                     counter['向聴数'].count(i) / len(counter['向聴数'])
                 ))
-                #print('  一向聴: {}回 ({:.3%}) / 六向聴: {}回 ({:.3%})'.format(
-                #    counter['向聴数'].count(1),
-                #    counter['向聴数'].count(1) / len(counter['向聴数']),
-                #    counter['向聴数'].count(6),
-                #    counter['向聴数'].count(6) / len(counter['向聴数']),
-                #))
         else:
             print('No Data')
     else:

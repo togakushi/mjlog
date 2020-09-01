@@ -14,7 +14,7 @@ from . import end
 
 def logopen(args, mjlog):
     t = None
-    if os.path.exists(mjlog):
+    if os.path.exists(mjlog) and not os.path.isdir(mjlog):
         try: # 雑に読み込み
             f = gzip.open(mjlog, 'rb')
             t = ET.parse(f)

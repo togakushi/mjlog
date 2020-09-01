@@ -172,7 +172,7 @@ def display(args):
         agari_ron = common.TargetCount(args, result['栄和'])
 
         if game['参加局数']:
-            print('和了率: {:.3%} ({}回) / 和了巡目: {:.4}'.format(
+            print('和了率: {:.3%} ({}回) / 和了巡目: {:.3f}'.format(
                 (agari_tumo + agari_ron) / game['参加局数'], agari_tumo + agari_ron,
                 sum(counter['和了巡目']) / len(counter['和了巡目']),
             ))
@@ -191,13 +191,13 @@ def display(args):
                 max(counter['和了点']),
             ))
             if common.TargetCount(args, result['放銃']):
-                print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.4}'.format(
+                print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.3f}'.format(
                     common.TargetCount(args, result['放銃']) / game['参加局数'],
                     common.TargetCount(args, result['放銃']),
                     sum(counter['放銃巡目']) / len(counter['放銃巡目']),
                 ))
             else:
-                print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.4}'.format(0, 0, float(0)))
+                print('放銃率: {:.3%} ({}回) / 放銃巡目: {:.3f}'.format(0, 0, float(0)))
             v = sum(agari_dist['放銃時'].values())
             print('  放銃時  > 副露: {}回 ({:.3%}) / 立直: {}回 ({:.3%}) / 面前: {}回 ({:.3%})'.format(
                 agari_dist['放銃時']['副露'], agari_dist['放銃時']['副露'] / v if v else 0,
@@ -249,9 +249,9 @@ def display(args):
         print('-' * line_width)
         print('【立直データ】')
         if game['参加局数']:
-            print('立直率: {:.3%} ({}回) / 立直巡目: {:.4}'.format(
+            print('立直率: {:.3%} ({}回) / 立直巡目: {:.3f}'.format(
                 counter['立直'] / game['参加局数'], counter['立直'],
-                sum(counter['立直巡目']) / len(counter['立直巡目']),
+                sum(counter['立直巡目']) / len(counter['立直巡目']) if counter['立直巡目'] else 0,
             ))
             v = counter['立直']
             print('  先制: {}回 ({:.3%}) / 追っかけ: {}回 ({:.3%})'.format(
@@ -266,7 +266,7 @@ def display(args):
             print('  立直収支: {}点 / 立直収入: {}点 / 立直支出: {}点'.format(
                 int(sum(counter['立直収支']) / counter['立直'] if counter['立直'] else 0),
                 int(sum(counter['立直収入']) / counter['立直和了'] if counter['立直和了'] else 0),
-                int(abs(sum(counter['立直支出']) / counter['立直放銃'])) if counter['立直放銃'] else 0,
+                int(abs(sum(counter['立直支出']) / counter['立直放銃']) if counter['立直放銃'] else 0),
             ))
         else:
             print('No Data')
@@ -380,17 +380,25 @@ def reach(args, header_flag):
     if game['参加局数']:
         tmp  = '{:6} | {:>8.3%}  {:>3} |   {:>5.02f} {:>8.3%}   {:>3} | '.format(
             game['参加試合数'],
-            counter['立直'] / game['参加局数'], counter['立直'],
-            sum(counter['立直巡目']) / len(counter['立直巡目']),
-            counter['先制立直'] / counter['立直'], counter['先制立直'])
+            counter['立直'] / game['参加局数'],
+            counter['立直'],
+            sum(counter['立直巡目']) / len(counter['立直巡目']) if counter['立直巡目'] else 0,
+            counter['先制立直'] / counter['立直'] if counter['立直'] else 0,
+            counter['先制立直'],
+        )
         tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3} {:>8.3%} {:>3} | '.format( 
-            counter['立直和了'] / counter['立直'], counter['立直和了'],
-            counter['立直放銃'] / counter['立直'], counter['立直放銃'],
-            counter['立直流局'] / counter['立直'], counter['立直流局'])
+            counter['立直和了'] / counter['立直'] if counter['立直'] else 0,
+            counter['立直和了'],
+            counter['立直放銃'] / counter['立直'] if counter['立直'] else 0,
+            counter['立直放銃'],
+            counter['立直流局'] / counter['立直'] if counter['立直'] else 0,
+            counter['立直流局'],
+        )
         tmp += '{:>8} {:>8} {:>8}'.format(
-            int(sum(counter['立直収支']) / counter['立直']),
-            int(sum(counter['立直収入']) / counter['立直和了']),
-            int(abs(sum(counter['立直支出']) / counter['立直放銃'])) if counter['立直放銃'] else 0)
+            int(sum(counter['立直収支']) / counter['立直'] if counter['立直'] else 0),
+            int(sum(counter['立直収入']) / counter['立直和了'] if counter['立直和了'] else 0),
+            int(abs(sum(counter['立直支出']) / counter['立直放銃']) if counter['立直放銃'] else 0),
+        )
         msg.append(tmp)
 
     return(msg)

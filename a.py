@@ -8,20 +8,27 @@ from lib import analysis
 if __name__ == '__main__':
     args = option.parser()
 
+    # 解析するログのリストを生成
+    mjloglist = []
+    if args.logdir:
+        for x in args.logdir:
+            mjloglist += main.logserach(x)
+    else:
+        mjloglist = args.log
+
+    if args.limit and args.limit < len(mjloglist):
+        mjloglist = mjloglist[len(mjloglist) - args.limit:]
+
+    if args.debug:
+        print('DEBUG: mjloglist ->', mjloglist)
+
+
     (analysis.game, analysis.result, analysis.agari_dist, analysis.counter) = analysis.initialize()
 
     header_flag = True
     output = []
 
-    if args.limit:
-        if args.limit > len(args.log):
-            loglist = args.log
-        else:
-            loglist = args.log[len(args.log) - args.limit:]
-    else:
-        loglist = args.log
-
-    for mjlog in loglist:
+    for mjlog in mjloglist:
         t = main.logopen(args, mjlog)
         if t:
             gamedata = common.GetGameData(t)

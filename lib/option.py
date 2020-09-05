@@ -49,12 +49,19 @@ def parser():
         help = 'デバッグ情報を表示する',
     )
 
-    g1 = p.add_argument_group('解析指定オプション')
-    g1.add_argument(
-        '-l', '--log', required=True, nargs = '*',
-        metavar = 'mjlog',
-        help = '解析するログを指定(必須)',
+    log = p.add_mutually_exclusive_group()
+    log.add_argument(
+        '-l', '--log', nargs = '+',
+        metavar = 'mjlogfile',
+        help = '指定したファイルを解析する',
     )
+    log.add_argument(
+        '-L', '--logdir', nargs = '+',
+        metavar = 'mjlogdir',
+        help = '指定したディレクトリから牌譜ログを再帰的に探索して解析する',
+    )
+
+    g1 = p.add_argument_group('解析指定オプション')
     g1.add_argument(
         '--limit', type = int, default = 0,
         metavar = '制限数',

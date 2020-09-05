@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os
+import glob
 import gzip
 import xml.etree.ElementTree as ET
 from urllib.parse import unquote
@@ -11,6 +12,14 @@ from . import analysis
 from . import fooro
 from . import end
 
+
+def logserach(dir):
+    filelist = []
+    if os.path.isdir(dir):
+        findpath = os.path.join(dir, '**', '*.mjlog')
+        filelist = glob.glob(findpath, recursive=True)
+
+    return(filelist)
 
 def logopen(args, mjlog):
     t = None

@@ -196,7 +196,7 @@ def agari(args, player, sutehai, mj, flag, junme):
         msg += '    役: {}\n'.format(y)
 
     if args.result and common.IsTarget(args, player):
-        print(msg[:-1])
+        print(msg.strip())
 
 def ryuukyoku(args, player, sekijun, mj):
     '''
@@ -253,7 +253,7 @@ def ryuukyoku(args, player, sekijun, mj):
         msg += '    聴牌: {}\n'.format(' '.join([player[x] for x in tenpai]))
 
     if args.result and common.IsTarget(args, player):
-        print(msg[:-1])
+        print(msg.strip())
 
 def owari(args, sekijun, player, mj):
     result = { # 局収支
@@ -282,4 +282,4 @@ def owari(args, sekijun, player, mj):
                 msg += '    {}位: {} {} ({})\n'.format(rank, player[p], result[p][0], result[p][1])
 
     if args.owari:
-        print(msg[:-1])
+        print(msg.strip())

@@ -88,7 +88,7 @@ def loop4(args, gamedata, t):
                 c += 1
 
             if args.init:
-                print(msg[:-1])
+                print(msg.strip())
 
             # 変数初期化
             sutehai = { # 捨牌

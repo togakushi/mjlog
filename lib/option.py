@@ -24,12 +24,13 @@ epilog_msg = '''
 \t副露収支: 副露した局収支の平均(供託含む)
 '''
  
-help_vicissitudes = '''成績遷移を表示する
+help_vicissitudes = '''
+成績遷移を表示する
 \thouju, h: 放銃率遷移
 \treach, r: 立直率遷移
 \tfooro, f: 副露率遷移
 \tbasic, b: 基本情報遷移
-'''
+'''.strip()
 
 def parser():
     p = argparse.ArgumentParser(

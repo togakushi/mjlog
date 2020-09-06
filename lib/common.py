@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
+import os
 import unicodedata
 from urllib.parse import unquote
+from datetime import datetime as dt
 
 from mahjong.shanten import Shanten
 from mahjong.tile import TilesConverter
@@ -226,3 +228,13 @@ def left(string, digit,):
             digit -= 1
 
     return(string + ' ' * digit)
+
+
+def TimestampSort(filelist):
+    timestamplist = {}
+    for fp in filelist:
+        timestamplist[fp] = dt.fromtimestamp(os.path.getctime(fp))
+
+    r = sorted(timestamplist.items(), key=lambda x:x[1])
+
+    return([r[x][0] for x in range(len(r))])

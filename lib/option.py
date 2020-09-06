@@ -60,6 +60,10 @@ def parser():
         metavar = 'mjlogdir',
         help = '指定したディレクトリから牌譜ログを再帰的に探索して解析する',
     )
+    p.add_argument(
+        '--sort', action = 'store_true',
+        help = 'タイムスタンプ順に牌譜ログを読み込む',
+    )
 
     g1 = p.add_argument_group('解析指定オプション')
     g1.add_argument(

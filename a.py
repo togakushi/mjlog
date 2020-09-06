@@ -19,6 +19,9 @@ if __name__ == '__main__':
     if args.limit and args.limit < len(mjloglist):
         mjloglist = mjloglist[len(mjloglist) - args.limit:]
 
+    if args.sort:
+        mjloglist = common.TimestampSort(mjloglist)
+
     if args.debug:
         print('DEBUG: mjloglist ->', mjloglist)
 

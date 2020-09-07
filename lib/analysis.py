@@ -38,7 +38,7 @@ def initialize():
         '立直巡目': [], '先制立直': 0, '追掛立直': 0,
         '立直収支': [], '立直収入': [], '立直支出': [],
         # 和了データ
-        '和了巡目': [], '放銃巡目': [],
+        '和了巡目': [], '放銃巡目': [], '放銃時向聴数': [],
         # 副露データ
         '副露': 0, '副露和了': 0, '副露放銃': 0, '副露流局': 0,
         '副露収支': [], '副露収入': [], '副露支出': [],
@@ -210,6 +210,11 @@ def display(args):
                 agari_dist['放銃相手']['立直'], agari_dist['放銃相手']['立直'] / v if v else 0,
                 agari_dist['放銃相手']['ダマ'], agari_dist['放銃相手']['ダマ'] / v if v else 0,
             ))
+            print('  放銃時向聴数: {:.2f} / 放銃時聴牌: {}回({:.3%})'.format(
+                sum(counter['放銃時向聴数']) / len(counter['放銃時向聴数']),
+                counter['放銃時向聴数'].count(0),
+                counter['放銃時向聴数'].count(0) / len(counter['放銃時向聴数']),
+            ))
             if len(counter['放銃点']):
                 print('  平均放銃: {}点 / 最大放銃: {}点'.format(
                     int(sum(counter['放銃点']) / len(counter['放銃点'])),
@@ -346,7 +351,7 @@ def houju(args, header_flag):
     msg = []
     if header_flag:
         tmp  = '試合数 |   放銃率 回数 | 放銃巡目 '
-        tmp += '| 放銃時> 副露          立直          面前 '
+        tmp += '| 放銃時聴牌率 | 放銃時> 副露          立直          面前 '
         tmp += '| 放銃相手> 副露        立直          ダマ '
         tmp += '| 平均放銃点'
         msg.append(tmp)
@@ -356,7 +361,9 @@ def houju(args, header_flag):
             common.TargetCount(args, result['放銃']) / game['参加局数'],
             common.TargetCount(args, result['放銃']),
             sum(counter['放銃巡目']) / len(counter['放銃巡目']))
-        tmp += '{:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} | '.format(
+        tmp += '{:>8.3%} {:>3} | {:>8.3%} {:>3}  {:>8.3%} {:>3}  {:>8.3%} {:>3} | '.format(
+            counter['放銃時向聴数'].count(0) / len(counter['放銃時向聴数']),
+            counter['放銃時向聴数'].count(0),
             agari_dist['放銃時']['副露'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['副露'],
             agari_dist['放銃時']['立直'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['立直'],
             agari_dist['放銃時']['面前'] / sum(agari_dist['放銃時'].values()), agari_dist['放銃時']['面前'])

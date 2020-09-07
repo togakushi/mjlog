@@ -5,7 +5,7 @@ from . import table
 from . import analysis
 from . import fooro
 
-def ho(sekijun, oya, player, sutehai):
+def ho(args, sekijun, oya, player, sutehai):
     print('  河>')
     c = 0
     latest = ''
@@ -29,7 +29,8 @@ def ho(sekijun, oya, player, sutehai):
         print('    {}({}): {}'.format(sekijun[c], player[int(seki)], ' '.join(sute)))
         c += 1
 
-def agari(args, player, sutehai, mj, flag, junme):
+
+def agari(args, player, sutehai, mj, flag, junme, saisyukei):
     '''
     和了したときの状態を表示
     '''
@@ -111,6 +112,7 @@ def agari(args, player, sutehai, mj, flag, junme):
             a = int(mj.attrib['who'])
             analysis.counter['放銃巡目'].append(junme[p])
             analysis.counter['放銃点'].append(int(mj.attrib['ten'].split(',')[1]))
+            analysis.counter['放銃時向聴数'].append(common.CountShanten(','.join(saisyukei)))
 
             if flag['reach'][p]:
                 analysis.agari_dist['放銃時']['立直'] += 1
@@ -198,6 +200,7 @@ def agari(args, player, sutehai, mj, flag, junme):
     if args.result and common.IsTarget(args, player):
         print(msg.strip())
 
+
 def ryuukyoku(args, player, sekijun, mj):
     '''
     流局したときの状態を表示
@@ -255,6 +258,7 @@ def ryuukyoku(args, player, sekijun, mj):
     if args.result and common.IsTarget(args, player):
         print(msg.strip())
 
+
 def owari(args, sekijun, player, mj):
     result = { # 局収支
         0: [], # Aさん
@@ -283,3 +287,46 @@ def owari(args, sekijun, player, mj):
 
     if args.owari:
         print(msg.strip())
+
+
+def paifu(player, haipai, tumohai, sutehai):
+    for seki in range(4):
+        haishi = haipai[seki]
+        print(player[seki])
+        print('  配牌', common.data_to_hai(','.join(haipai[seki])))
+        print('  ツモ', tumohai[seki])
+        print('  打牌', sutehai[seki])
+        for x in range(len(sutehai[seki])):
+            if tumohai[seki]:
+                x1 = tumohai[seki].pop(0)
+                haishi.append(x1)
+
+            if sutehai[seki]:
+                x2 = sutehai[seki].pop(0)
+                if int(x2) < 0:
+                    continue
+                if x2 in haishi:
+                    haishi.remove(x2)
+            print('  : {}({}) -> {}({}) : {}'.format(
+                table.pai[int(x1)], x1,
+                table.pai[int(x2)], x2,
+                common.data_to_hai(','.join(haishi))
+            ))
+        print('  最終', common.data_to_hai(','.join(haishi)), common.CountShanten(','.join(haishi)))
+
+
+def GetSaisyuukei(player_no, haipai, tumohai, sutehai):
+    haishi = haipai[player_no]
+    for x in range(len(sutehai[player_no])):
+        if tumohai[player_no]:
+            x1 = tumohai[player_no].pop(0)
+            haishi.append(x1)
+
+        if sutehai[player_no]:
+            x2 = sutehai[player_no].pop(0)
+            if int(x2) < 0:
+                continue
+            if x2 in haishi:
+                haishi.remove(x2)
+
+    return(haishi)

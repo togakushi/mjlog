@@ -73,34 +73,20 @@ def loop4(args, gamedata, t):
             ba = common.ba(mj.attrib['seed'].split(',')[0], mj.attrib['seed'].split(',')[1])
             dora = table.pai[int(mj.attrib['seed'].split(',')[5])]
 
-            if common.IsTarget(args, player, int(oya)):
-                flag['oya'] = True
-            else:
-                flag['oya'] = False
-
-            if args.init | args.sute | args.result:
-                print()
-                print(ba, 'ドラ表示:', dora, '親:', player[int(mj.attrib['oya'])])
-
-            msg = ('  配牌>\n')
-            c = 0
-            for seki in h[int(mj.attrib['oya']):] + h[:int(mj.attrib['oya'])]:
-                shanten = common.CountShanten(mj.attrib['hai' + seki])
-                msg += '    {}({}): {} / {}\n'.format(
-                    sekijun[c],
-                    player[int(seki)],
-                    ' '.join(common.data_to_hai(mj.attrib['hai' + seki])),
-                    shanten,
-                )
-                if common.IsTarget(args, player, int(seki)):
-                    analysis.counter['向聴数'].append(shanten)
-                c += 1
-
-            if args.init:
-                print(msg.strip())
-
             # 変数初期化
+            haipai = { # 捨牌
+                0: [], # Aさん
+                1: [], # Bさん
+                2: [], # Cさん
+                3: [], # Dさん
+            }
             sutehai = { # 捨牌
+                0: [], # Aさん
+                1: [], # Bさん
+                2: [], # Cさん
+                3: [], # Dさん
+            }
+            tumohai = { # 捨牌
                 0: [], # Aさん
                 1: [], # Bさん
                 2: [], # Cさん
@@ -111,12 +97,42 @@ def loop4(args, gamedata, t):
             junme = { 0: 0, 1: 0, 2: 0, 3: 0 }
             naki_count = 0 # 解析対象者の副露数
             last_p = int(oya)  # 河に牌を捨てた最後の人
+            last_h = '' # 河に出された最後の牌
+
+            if common.IsTarget(args, player, int(oya)):
+                flag['oya'] = True
+            else:
+                flag['oya'] = False
+
+            if args.init or args.sute or args.result:
+                print()
+                print(ba, 'ドラ表示:', dora, '親:', player[int(mj.attrib['oya'])])
+
+            msg = ('  配牌>\n')
+            c = 0
+            for seki in h[int(mj.attrib['oya']):] + h[:int(mj.attrib['oya'])]:
+                haipai[int(seki)] = sorted([x for x in mj.attrib['hai' + seki].split(',')])
+                shanten = common.CountShanten(mj.attrib['hai' + seki])
+                msg += '    {}({}): {} / {}\n'.format(
+                    sekijun[c],
+                    player[int(seki)],
+                    ' '.join(common.data_to_hai(mj.attrib['hai' + seki])),
+                    shanten,
+                )
+                if common.IsTarget(args, player, int(seki)):
+                    analysis.counter['向聴数'].append(shanten)
+
+                c += 1
+
+            if args.init:
+                print(msg.strip())
 
         # 和了
         if mj.tag == 'AGARI':
             if args.sute:
-                end.ho(sekijun, oya, player, sutehai)
-            end.agari(args, player, sutehai, mj, flag, junme)
+                end.ho(args, sekijun, oya, player, sutehai)
+            saisyuukei = end.GetSaisyuukei(common.GetPosition(args, player), haipai, tumohai, sutehai)
+            end.agari(args, player, sutehai, mj, flag, junme, saisyuukei)
 
             if 'owari' in mj.attrib:
                 end.owari(args, sekijun, player, mj)
@@ -125,6 +141,9 @@ def loop4(args, gamedata, t):
                 print('DEBUG:', [player[x] for x in range(len(sekijun))])
                 print('DEBUG:', flag)
                 print('DEBUG:', mj.tag, mj.attrib)
+
+            if args.verbos:
+                end.paifu(player, haipai, tumohai, sutehai)
 
         # 流局
         if mj.tag == 'RYUUKYOKU':
@@ -135,11 +154,13 @@ def loop4(args, gamedata, t):
                     analysis.counter['副露流局'] += 1
 
             if args.sute:
-                end.ho(sekijun, oya, player, sutehai)
+                end.ho(args, sekijun, oya, player, sutehai)
             end.ryuukyoku(args, player, sekijun, mj)
 
             if 'owari' in mj.attrib:
                 end.owari(args, sekijun, player, mj)
+            if args.verbos:
+                end.paifu(player, haipai, tumohai, sutehai)
 
             if args.debug:
                 print('DEBUG:', [player[x] for x in range(len(sekijun))])
@@ -154,6 +175,7 @@ def loop4(args, gamedata, t):
         # ツモ
         if mj.tag[0] in ('T', 'U', 'V', 'W'):
             p = ('T', 'U', 'V', 'W').index(mj.tag[0])
+            tumohai[p].append(mj.tag[1:])
             junme[p] += 1
 
         # 捨牌
@@ -161,10 +183,12 @@ def loop4(args, gamedata, t):
             p = ('D', 'E', 'F', 'G').index(mj.tag[0])
             sutehai[p].append(mj.tag[1:])
             last_p = p
+            last_h = mj.tag[1:]
 
         # 鳴き
         if mj.tag == 'N':
             p = int(mj.attrib['who'])
+            tumohai[p].append(last_h)
             junme[p] += 1
 
             for m in mj.attrib['m'].split(','):

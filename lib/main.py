@@ -33,7 +33,7 @@ def logopen(args, mjlog):
         finally:
             f.close()
             if args.verbos:
-                print(mjlog)
+                print('Read File ->', mjlog)
 
     return(t)
 

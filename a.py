@@ -67,7 +67,7 @@ if __name__ == '__main__':
     if not args.vicissitudes and args.quiet:
         analysis.display(args)
     else:
-        if not args.count or len(output) - args.count < 0:
+        if not args.count or len(output) - args.count < 1:
             start = 1
         else:
             start = len(output) - args.count

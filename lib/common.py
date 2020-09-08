@@ -111,7 +111,8 @@ def CountShanten(haishi):
         honors = honors,
     )
 
-    return(shanten.calculate_shanten(tiles))
+    c = shanten.calculate_shanten(tiles)
+    return(c if c > 0 else 0)
 
 
 def TargetExists(args, t):

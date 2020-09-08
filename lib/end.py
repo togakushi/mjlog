@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import copy
+
 from . import common
 from . import table
 from . import analysis
@@ -290,19 +292,22 @@ def owari(args, sekijun, player, mj):
 
 
 def paifu(player, haipai, tumohai, sutehai):
-    for seki in range(4):
-        haishi = haipai[seki]
+    for seki in range(len(player)):
+        haishi = haipai[seki].copy()
+        tmp_tumohai = tumohai[seki].copy()
+        tmp_sutehai = sutehai[seki].copy()
+
         print(player[seki])
-        print('  配牌', common.data_to_hai(','.join(haipai[seki])))
-        print('  ツモ', tumohai[seki])
-        print('  打牌', sutehai[seki])
-        for x in range(len(sutehai[seki])):
-            if tumohai[seki]:
-                x1 = tumohai[seki].pop(0)
+        print('  配牌', common.data_to_hai(','.join(haishi)))
+        print('  ツモ', tmp_tumohai)
+        print('  打牌', tmp_sutehai)
+        for x in range(len(tmp_sutehai)):
+            if tmp_tumohai:
+                x1 = tmp_tumohai.pop(0)
                 haishi.append(x1)
 
-            if sutehai[seki]:
-                x2 = sutehai[seki].pop(0)
+            if tmp_sutehai:
+                x2 = tmp_sutehai.pop(0)
                 if int(x2) < 0:
                     continue
                 if x2 in haishi:
@@ -316,14 +321,17 @@ def paifu(player, haipai, tumohai, sutehai):
 
 
 def GetSaisyuukei(player_no, haipai, tumohai, sutehai):
-    haishi = haipai[player_no]
-    for x in range(len(sutehai[player_no])):
-        if tumohai[player_no]:
-            x1 = tumohai[player_no].pop(0)
+    haishi = haipai[player_no].copy()
+    tmp_tumohai = tumohai[player_no].copy()
+    tmp_sutehai = sutehai[player_no].copy()
+
+    for x in range(len(tmp_sutehai)):
+        if tmp_tumohai:
+            x1 = tmp_tumohai.pop(0)
             haishi.append(x1)
 
-        if sutehai[player_no]:
-            x2 = sutehai[player_no].pop(0)
+        if tmp_sutehai:
+            x2 = tmp_sutehai.pop(0)
             if int(x2) < 0:
                 continue
             if x2 in haishi:

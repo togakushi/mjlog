@@ -44,6 +44,8 @@ def loop3(args, gamedata, t):
 
 def loop4(args, gamedata, t):
     player = gamedata['対局者']
+    haipai = {}
+    tumohai = {}
     sutehai = {}
     flag = {}
     junme = {}
@@ -132,6 +134,7 @@ def loop4(args, gamedata, t):
             if args.sute:
                 end.ho(args, sekijun, oya, player, sutehai)
             saisyuukei = end.GetSaisyuukei(common.GetPosition(args, player), haipai, tumohai, sutehai)
+
             end.agari(args, player, sutehai, mj, flag, junme, saisyuukei)
 
             if 'owari' in mj.attrib:

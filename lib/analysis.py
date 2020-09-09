@@ -440,7 +440,7 @@ def basic(args, header_flag):
         tmp  = '試合数 局数 | 和了率   放銃率   立直率   副露率   | '
         tmp += '平均(和了/放銃/立直収支/副露収支) | '
         tmp += '順位        平均  連対率   ラス率   飛び率   | '
-        tmp += 'ポイント(累積/平均)'
+        tmp += '順位/得点/累積/平均'
         msg.append(tmp)
     if game['参加局数']:
         # 順位
@@ -468,7 +468,9 @@ def basic(args, header_flag):
             (total_r.count(1) + total_r.count(2)) / len(total_r),
             total_r.count(4) / len(total_r),
             common.CountTobi(total_t) / len(total_r))
-        tmp += '{:>8} {:>8.03f}'.format(sum(total_p), sum(total_p) / len(total_p))
+        tmp += '{:>1} {:>6} {:>8} {:>8.03f}'.format(
+            total_r[-1], total_p[-1],
+            sum(total_p), sum(total_p) / len(total_p))
         msg.append(tmp)
 
     return(msg)

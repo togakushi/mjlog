@@ -158,7 +158,7 @@ def GetGameData(t):
 
 def IsTarget(args, player, p = None):
     '''
-    解析対象者が含まれているが判定する
+    解析対象者が対局者リストに含まれているが判定する
     '''
     ret = False
     if args.player:
@@ -213,6 +213,8 @@ def GetPosition(args, player):
         for p in args.player:
             if p in player:
                 ret = player.index(p)
+    if args.debug:
+        print('DEBUG[GetPosition]:', args.player, player, ret)
 
     return(ret)
 

@@ -23,9 +23,10 @@ if __name__ == '__main__':
         mjloglist = common.TimestampSort(mjloglist)
 
     if args.debug:
-        print('DEBUG: mjloglist ->', mjloglist)
+        print('*' * 80)
+        print('DEBUG[INIT]: mjloglist ->', mjloglist)
 
-
+    # データ初期化
     (analysis.game, analysis.result, analysis.agari_dist, analysis.counter) = analysis.initialize()
 
     header_flag = True
@@ -36,6 +37,11 @@ if __name__ == '__main__':
         if t:
             gamedata = common.GetGameData(t)
             gamedata['対局者'] = common.GetPlayerName(t)
+
+            if args.debug:
+                print('-' * 40)
+                print('DEBUG[INIT]:', mjlog)
+                print('DEBUG[INIT]:', gamedata['対局者'])
 
             if not str(gamedata['卓']) in args.taku.split(','):
                 continue

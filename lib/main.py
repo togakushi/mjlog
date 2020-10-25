@@ -133,8 +133,8 @@ def loop4(args, gamedata, t):
         if mj.tag == 'AGARI':
             if args.sute:
                 end.ho(args, sekijun, oya, player, sutehai)
-            saisyuukei = end.GetSaisyuukei(common.GetPosition(args, player), haipai, tumohai, sutehai)
 
+            saisyuukei = end.GetSaisyuukei(args, player, haipai, tumohai, sutehai)
             end.agari(args, player, sutehai, mj, flag, junme, saisyuukei)
 
             if 'owari' in mj.attrib:

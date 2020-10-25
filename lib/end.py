@@ -112,6 +112,7 @@ def agari(args, player, sutehai, mj, flag, junme, saisyukei):
         if common.IsTarget(args, player, int(mj.attrib['fromWho'])):
             p = int(mj.attrib['fromWho'])
             a = int(mj.attrib['who'])
+
             analysis.counter['放銃巡目'].append(junme[p])
             analysis.counter['放銃点'].append(int(mj.attrib['ten'].split(',')[1]))
             analysis.counter['放銃時向聴数'].append(common.CountShanten(','.join(saisyukei)))
@@ -320,7 +321,11 @@ def paifu(player, haipai, tumohai, sutehai):
         print('  最終', common.data_to_hai(','.join(haishi)), common.CountShanten(','.join(haishi)))
 
 
-def GetSaisyuukei(player_no, haipai, tumohai, sutehai):
+def GetSaisyuukei(args, player, haipai, tumohai, sutehai):
+    player_no = common.GetPosition(args, player)
+    if player_no == None:
+        return(None)
+
     haishi = haipai[player_no].copy()
     tmp_tumohai = tumohai[player_no].copy()
     tmp_sutehai = sutehai[player_no].copy()
@@ -336,5 +341,11 @@ def GetSaisyuukei(player_no, haipai, tumohai, sutehai):
                 continue
             if x2 in haishi:
                 haishi.remove(x2)
+
+    if args.debug:
+        print('DEBUG[最終形]:', haipai)
+        print('DEBUG[最終形]:', tumohai)
+        print('DEBUG[最終形]:', sutehai)
+        print('DEBUG[最終形]:', haishi)
 
     return(haishi)

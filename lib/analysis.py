@@ -428,9 +428,10 @@ def fooro(args, header_flag):
             counter['副露放銃'] / counter['副露'], counter['副露放銃'],
             counter['副露流局'] / counter['副露'], counter['副露流局'])
         tmp += '{:>8} {:>8} {:>8}'.format(
-            int(sum(counter['副露収支']) / counter['副露']),
-            int(sum(counter['副露収入']) / counter['副露和了']),
-            int(abs(sum(counter['副露支出']) / counter['副露放銃'])))
+            int(sum(counter['副露収支']) / counter['副露'] if counter['副露'] else 0),
+            int(sum(counter['副露収入']) / counter['副露和了'] if counter['副露和了'] else 0),
+            int(abs(sum(counter['副露支出']) / counter['副露放銃']) if counter['副露放銃'] else 0),
+        )
         msg.append(tmp)
 
     return(msg)

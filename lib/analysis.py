@@ -424,9 +424,12 @@ def fooro(args, header_flag):
             game['参加試合数'],
             counter['副露'] / game['参加局数'], counter['副露'])
         tmp += '{:>8.3%} {:>3} {:>8.3%} {:>3} {:>8.3%} {:>3} | '.format( 
-            counter['副露和了'] / counter['副露'], counter['副露和了'],
-            counter['副露放銃'] / counter['副露'], counter['副露放銃'],
-            counter['副露流局'] / counter['副露'], counter['副露流局'])
+            counter['副露和了'] / counter['副露'] if counter['副露'] else 0,
+            counter['副露和了'],
+            counter['副露放銃'] / counter['副露'] if counter['副露'] else 0,
+            counter['副露放銃'],
+            counter['副露流局'] / counter['副露'] if counter['副露'] else 0,
+            counter['副露流局'])
         tmp += '{:>8} {:>8} {:>8}'.format(
             int(sum(counter['副露収支']) / counter['副露'] if counter['副露'] else 0),
             int(sum(counter['副露収入']) / counter['副露和了'] if counter['副露和了'] else 0),

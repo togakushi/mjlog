@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 from lib import main
 from lib import common
 from lib import option
@@ -70,9 +71,11 @@ if __name__ == '__main__':
                     header_flag = False
 
     # 解析結果出力
-    if not args.vicissitudes and args.quiet:
-        analysis.display(args)
-    else:
+    if args.details:
+        print("!!!")
+        sys.exit()
+
+    if args.vicissitudes:
         if not args.count or len(output) - args.count < 1:
             start = 1
         else:
@@ -83,3 +86,7 @@ if __name__ == '__main__':
                 print(output[x])
         else:
             print('No Data')
+        sys.exit()
+
+    if not args.vicissitudes and args.quiet:
+        analysis.display(args)

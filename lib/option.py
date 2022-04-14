@@ -45,7 +45,11 @@ def parser():
         help = '統計情報を表示しない',
     )
     p.add_argument(
-        '-d', '--debug', action = 'store_true',
+        '-d', '--details', action = 'store_true',
+        help = '対局情報の詳細を表示する',
+    )
+    p.add_argument(
+        '--debug', action = 'store_true',
         help = 'デバッグ情報を表示する',
     )
 
